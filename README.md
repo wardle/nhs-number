@@ -1,5 +1,7 @@
 # nhs-number
 
+[![Clojars Project](https://img.shields.io/clojars/v/com.eldrix/nhs-number.svg)](https://clojars.org/com.eldrix/nhs-number)
+
 A Clojure library providing validation, formatting and generation of UK NHS 
 Numbers.
 
