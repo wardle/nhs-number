@@ -1,8 +1,19 @@
 {:paths ["src"]
  :deps {org.clojure/clojure             {:mvn/version "1.11.1"}}
  :aliases
- {:test {:extra-paths ["test"]
+ {:build {:extra-paths ["."]
+          :deps       {io.github.clojure/tools.build          {:mvn/version "0.9.4"}
+                       slipset/deps-deploy                    {:mvn/version "0.2.1"}}
+          :ns-default build}
+  :test {:extra-paths ["test"]
          :extra-deps  {org.clojure/test.check         {:mvn/version "1.1.1"}
                        com.cognitect/test-runner      {:git/url "https://github.com/cognitect-labs/test-runner.git"
                                                        :sha     "7284cda41fb9edc0f3bc6b6185cfb7138fc8a023"}}
-         :exec-fn     cognitect.test-runner.api/test}}}
+         :exec-fn     cognitect.test-runner.api/test}
+  :outdated
+  {:extra-deps {com.github.liquidz/antq {:mvn/version "2.5.1095"}}
+   :main-opts  ["-m" "antq.core"]}
+
+  :upgrade
+  {:extra-deps {com.github.liquidz/antq {:mvn/version "2.5.1095"}}
+   :main-opts  ["-m" "antq.core" "--upgrade"]}}}

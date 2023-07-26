@@ -7,4 +7,26 @@ The standards relating the NHS number are set out in [ISB 0149](https://digital.
 The NHS number is the unique patient identifier for a patient within the National Health 
 Service in England and Wales.
 
+
+
+# Development notes
+
+Run unit tests
+```shell
+clj -X:test
+```
+
+Build a library jar file
+```shell
+clj -T:build jar
+```
+
+Deploy to Clojars repository: (requires valid `CLOJARS_USERNAME` and 
+`CLOJARS_PASSWORD` environmental variables to be set)
+
+```shell
+clj -T:build deploy
+```
+
+
 Mark Wardle
