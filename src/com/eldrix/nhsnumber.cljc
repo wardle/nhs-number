@@ -1,9 +1,31 @@
+;; Copyright 2023, Mark Wardle and Eldrix Ltd
+;
+;   Licensed under the Apache License, Version 2.0 (the "License");
+;   you may not use this file except in compliance with the License.
+;   You may obtain a copy of the License at
+;
+;       http://www.apache.org/licenses/LICENSE-2.0
+;
+;   Unless required by applicable law or agreed to in writing, software
+;   distributed under the License is distributed on an "AS IS" BASIS,
+;   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+;   See the License for the specific language governing permissions and
+;   limitations under the License.
+;
 (ns com.eldrix.nhsnumber
   "Utility functions for validating, formatting, normalising and generating
-   UK NHS numbers."
-  (:require [clojure.string :as str]))
+    UK NHS numbers."
+  (:require [clojure.string :as str]
+            #?(:cljs [goog.string :as gstring])
+            #?(:cljs [goog.string.format])))
 
-(set! *warn-on-reflection* true)
+#?(:clj (set! *warn-on-reflection* true))
+
+(defn ^:private s->digits
+  "Turn a string of digits into a sequence of integers."
+  [s]
+  #?(:clj  (map #(unchecked-subtract-int (int %) 48) (str s))
+     :cljs (map #(unchecked-subtract-int (.charCodeAt % 0) 48) (str s))))
 
 (defn ^:private check-digit
   "Calculate an NHS number check digit for the first nine characters of the
@@ -13,11 +35,21 @@
   calculated check digit can be used to create a valid NHS number.
   Note: a check digit of 10 means that the NHS number is invalid."
   [s]
-  (let [digits (map #(unchecked-subtract-int (int %) (int \0)) (str s)) ;; convert string into integers
+  (let [digits (s->digits s)                                ;; convert string into integers
         weights (range 10 1 -1)                             ;; the weights running from 10 down to 2
         total (reduce unchecked-add-int (map unchecked-multiply-int digits weights)) ;; multiply and total
         c1 (- 11 (mod total 11))]                           ;; calculate check digit
     (if (= 11 c1) 0 c1)))                                   ;; corrective fix when result is 11
+
+(defn ^:private all-digits? [s]
+  #?(:clj  (every? #(Character/isDigit ^char %) s)
+     :cljs (not-any? #(js/isNaN %) s)))
+
+(defn ^:private char-code-at
+  "Returns the integer value of the character at index 'idx'"
+  [s idx]
+  #?(:clj (int (.charAt ^String s idx))
+     :cljs (.charCodeAt s idx)))
 
 (defn valid?
   "Validate an NHS number using the modulus 11 algorithm.
@@ -31,8 +63,8 @@
   6. If result is 10, NHS number is invalid
   7. Check remainder matches the check digit, if it does not NHS number is invalid"
   [^String nnn]
-  (when (and (= 10 (count nnn)) (every? #(Character/isDigit ^char %) nnn))
-    (let [cd (- (int (.charAt nnn 9)) (int \0))]            ;; the check digit
+  (when (and (= 10 (count nnn)) (all-digits? nnn))
+    (let [cd (- (char-code-at nnn 9) 48)]            ;; the check digit
       (= cd (check-digit nnn)))))
 
 (defn format-nnn
@@ -66,7 +98,9 @@
   "A transducer that transforms input strings by padding to 9 digits, adding a
   check digit and removing invalid generated NHS numbers."
   (comp
-    (map #(let [s (format "%09d" %)] (str s (check-digit s))))                    ;; this *can* generate invalid NHS numbers (e.g. if check digit is 10)
+    (map #(let [s #?(:clj (format "%09d" %)
+                     :cljs (gstring/format "%09d" %))]
+            (str s (check-digit s))))                       ;; this *can* generate invalid NHS numbers (e.g. if check digit is 10)
     (filter valid?)))
 
 (defn ^:private nnn-range

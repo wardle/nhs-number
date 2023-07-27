@@ -2,8 +2,8 @@
 
 [![Clojars Project](https://img.shields.io/clojars/v/com.eldrix/nhs-number.svg)](https://clojars.org/com.eldrix/nhs-number)
 
-A Clojure library providing validation, formatting and generation of UK NHS 
-Numbers.
+A Clojure/Script library providing validation, formatting and generation of UK NHS 
+Numbers. As such, this library can be used for both front-end and back-end requirements.
 
 The standards relating the NHS number are set out in [ISB 0149](https://digital.nhs.uk/data-and-information/information-standards/information-standards-and-data-collections-including-extractions/publications-and-notifications/standards-and-collections/isb-0149-nhs-number).
 The NHS number is the unique patient identifier for a patient within the National Health 
