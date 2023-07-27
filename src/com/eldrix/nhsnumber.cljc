@@ -15,9 +15,7 @@
 (ns com.eldrix.nhsnumber
   "Utility functions for validating, formatting, normalising and generating
     UK NHS numbers."
-  (:require [clojure.string :as str]
-            #?(:cljs [goog.string :as gstring])
-            #?(:cljs [goog.string.format])))
+  (:require [clojure.string :as str]))
 
 #?(:clj (set! *warn-on-reflection* true))
 
@@ -94,12 +92,20 @@
   (let [s' (str/replace s #"\D" "")]
     (when (= 10 (count s')) s')))
 
+(defn ^:private pad-leading
+  "Generate a string representation of a number with padding."
+  [n i]
+  (let [s (str i)
+        c (- n (count s))]
+    (if (pos-int? c)
+      (str (apply str (repeat c "0")) s)
+      s)))
+
 (def ^:private xf-generate
   "A transducer that transforms input strings by padding to 9 digits, adding a
   check digit and removing invalid generated NHS numbers."
   (comp
-    (map #(let [s #?(:clj (format "%09d" %)
-                     :cljs (gstring/format "%09d" %))]
+    (map #(let [s (pad-leading 9 %)]
             (str s (check-digit s))))                       ;; this *can* generate invalid NHS numbers (e.g. if check digit is 10)
     (filter valid?)))
 
