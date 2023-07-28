@@ -46,7 +46,7 @@
 (defn ^:private char-code-at
   "Returns the integer value of the character at index 'idx'"
   [s idx]
-  #?(:clj (int (.charAt ^String s idx))
+  #?(:clj  (int (.charAt ^String s idx))
      :cljs (.charCodeAt s idx)))
 
 (defn valid?
@@ -62,7 +62,7 @@
   7. Check remainder matches the check digit, if it does not NHS number is invalid"
   [^String nnn]
   (when (and (= 10 (count nnn)) (all-digits? nnn))
-    (let [cd (- (char-code-at nnn 9) 48)]            ;; the check digit
+    (let [cd (- (char-code-at nnn 9) 48)]                   ;; the check digit
       (= cd (check-digit nnn)))))
 
 (defn format-nnn
