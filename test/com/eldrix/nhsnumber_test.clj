@@ -1,6 +1,6 @@
 (ns com.eldrix.nhsnumber-test
   (:require [clojure.string :as str]
-            [clojure.test :refer :all]
+            [clojure.test :refer [deftest is run-tests]]
             [com.eldrix.nhsnumber :as nnn]))
 
 (def valid-examples
