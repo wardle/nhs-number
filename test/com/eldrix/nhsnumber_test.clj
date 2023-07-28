@@ -29,7 +29,14 @@
 
 (deftest test-normalise
   (is (= (nnn/normalise "123 123 4567") "1231234567"))
-  (is (nnn/valid? (nnn/normalise "111 111 1111"))))
+  (is (nnn/valid? (nnn/normalise "111 111 1111")))
+  (is (nnn/valid? (nnn/normalise "111-111-1111" :strict)))
+  (is (nnn/valid? (nnn/normalise "111 1111 111")))
+  (is (not (nnn/valid? (nnn/normalise "111 1111 111" :strict))))
+  (is (not (nnn/valid? (nnn/normalise "111 111  1111" :strict)))
+      "Only single separator permitted in strict mode")
+  (is (not (nnn/valid? (nnn/normalise "111a111a1111" :lenient)))
+      "Only non-word characters can be used as separators"))
 
 (deftest test-format
   (is (= (nnn/format-nnn "1231234567") "123 123 4567")))

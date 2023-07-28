@@ -87,10 +87,20 @@
   ```
   (normalise \"111 222 3304\")
   => \"1112223304\"
-  ```"
-  [s]
-  (let [s' (str/replace s #"\D" "")]
-    (when (= 10 (count s')) s')))
+  ```
+  There are two modes :lenient and :strict
+  - :lenient :removes spaces and punctuation from anywhere in string
+  - :strict  :only a single space or punctuation permitted between 3,3,4 groups."
+  ([s]
+   (normalise s :lenient))
+  ([s mode]
+   (let [s' (case mode
+              ;; in lenient mode, we permit any number of whitespace/punctuation in any position
+              :lenient (str/replace s #"\W*" "")
+              ;; in strict mode, input must match 3,3,4 with 0 or 1 space/punctuation
+              :strict (when-let [m (re-matches #"(\d{3})\W?(\d{3})\W?(\d{4})" s)]
+                        (str (m 1) (m 2) (m 3))))]
+     (when (= 10 (count s')) s'))))
 
 (defn ^:private pad-leading
   "Generate a string representation of a number with padding."
@@ -174,7 +184,7 @@
   (take 50 (distinct (random-sequence "999")))
   (require '[criterium.core :as crit])
   (format-nnn "1234567890")
-  (normalise "123 456 7890")
+  (normalise "123 456 7890" :strict)
   (crit/bench (format-nnn "11111111111")))
 
 
