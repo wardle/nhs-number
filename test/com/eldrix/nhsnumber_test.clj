@@ -37,12 +37,12 @@
 (deftest test-random-seq
   (let [xs (take 10000 (nnn/random-sequence 999))]
     (is (every? nnn/valid? xs))
-    (is  (every? true? (map #(str/starts-with? % "999") xs)))))
+    (is (every? true? (map #(str/starts-with? % "999") xs)))))
 
 (deftest test-consecutive-seq
   (let [xs (take 10000 (nnn/ordered-sequence 999))]
     (is (every? nnn/valid? xs))
-    (is  (every? true? (map #(str/starts-with? % "999") xs)))))
+    (is (every? true? (map #(str/starts-with? % "999") xs)))))
 
 (comment
   (run-tests))
