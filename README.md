@@ -18,10 +18,11 @@ Run unit tests in Clojure:
 clj -M:test-clj
 ```
 
-Run unit tests in ClojureScript:
+Run unit tests in ClojureScript (this compiles the test source files into Javascript and runs using 'node.js'):
 ```shell
 clj -M:test-cljs
 ```
+
 
 Build a library jar file
 ```shell
