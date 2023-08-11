@@ -1,15 +1,24 @@
 {:paths ["src"]
- :deps {org.clojure/clojure             {:mvn/version "1.11.1"}}
+ :deps  {org.clojure/clojure {:mvn/version "1.11.1"}}
  :aliases
- {:build {:extra-paths ["."]
-          :deps       {io.github.clojure/tools.build          {:mvn/version "0.9.4"}
-                       slipset/deps-deploy                    {:mvn/version "0.2.1"}}
-          :ns-default build}
-  :test {:extra-paths ["test"]
-         :extra-deps  {org.clojure/test.check         {:mvn/version "1.1.1"}
-                       com.cognitect/test-runner      {:git/url "https://github.com/cognitect-labs/test-runner.git"
-                                                       :sha     "7284cda41fb9edc0f3bc6b6185cfb7138fc8a023"}}
-         :exec-fn     cognitect.test-runner.api/test}
+ {:build
+  {:extra-paths ["."]
+   :deps        {io.github.clojure/tools.build {:mvn/version "0.9.4"}
+                 slipset/deps-deploy           {:mvn/version "0.2.1"}}
+   :ns-default  build}
+
+  :test-clj
+  {:extra-paths ["test"]
+   :extra-deps  {org.clojure/test.check    {:mvn/version "1.1.1"}
+                 com.cognitect/test-runner {:git/url "https://github.com/cognitect-labs/test-runner.git"
+                                            :sha     "7284cda41fb9edc0f3bc6b6185cfb7138fc8a023"}}
+   :main-opts   ["-m" "cognitect.test-runner"]}
+
+  :test-cljs
+  {:extra-paths ["test"]
+   :extra-deps  {thheller/shadow-cljs {:mvn/version "2.25.2"}}
+   :main-opts   ["-m" "shadow.cljs.devtools.cli" "compile" "test"]}
+
   :outdated
   {:extra-deps {com.github.liquidz/antq {:mvn/version "2.5.1095"}}
    :main-opts  ["-m" "antq.core"]}

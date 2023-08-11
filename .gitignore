@@ -3,3 +3,6 @@
 .idea
 target
 *.iml
+.shadow-cljs
+out
+.nrepl-port

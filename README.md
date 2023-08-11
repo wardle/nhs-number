@@ -13,9 +13,14 @@ Service in England and Wales.
 
 # Development notes
 
-Run unit tests
+Run unit tests in Clojure:
 ```shell
-clj -X:test
+clj -M:test-clj
+```
+
+Run unit tests in ClojureScript:
+```shell
+clj -M:test-cljs
 ```
 
 Build a library jar file
