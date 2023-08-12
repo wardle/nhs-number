@@ -1,6 +1,8 @@
 # nhs-number
 
 [![Clojars Project](https://img.shields.io/clojars/v/com.eldrix/nhs-number.svg)](https://clojars.org/com.eldrix/nhs-number)
+![clj tests](https://github.com/wardle/nhs-number/actions/workflows/test-clj.yml/badge.svg)
+![cljs tests](https://github.com/wardle/nhs-number/actions/workflows/test-cljs.yml/badge.svg)
 
 A Clojure/Script library providing validation, formatting and generation of UK NHS 
 Numbers. As such, this library can be used for both front-end and back-end requirements.
