@@ -1,4 +1,4 @@
-name: Test Clojure
+name: Test clj
 
 on:
   pull_request:
