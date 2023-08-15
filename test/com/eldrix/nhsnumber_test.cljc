@@ -1,6 +1,10 @@
 (ns com.eldrix.nhsnumber-test
   (:require [clojure.string :as str]
             [clojure.test :refer [deftest is run-tests]]
+            [clojure.test.check :as tc]
+            [clojure.test.check.generators :as gen]
+            [clojure.test.check.properties :as prop]
+            [clojure.test.check.clojure-test :refer [defspec]]
             [com.eldrix.nhsnumber :as nnn]))
 
 (def valid-examples
@@ -44,12 +48,30 @@
 (deftest test-random-seq
   (let [xs (take 10000 (nnn/random-sequence 999))]
     (is (every? nnn/valid? xs))
-    (is (every? true? (map #(str/starts-with? % "999") xs)))))
+    (is (every? true? (map #(str/starts-with? % "999") xs)))
+    (is (every? true? (map #(str/starts-with? (nnn/format-nnn %) "999 ") xs)))))
 
 (deftest test-consecutive-seq
   (let [xs (take 10000 (nnn/ordered-sequence 999))]
     (is (every? nnn/valid? xs))
     (is (every? true? (map #(str/starts-with? % "999") xs)))))
+
+(defspec random-strings-valid?
+  {:num-tests 5000, :reporter-fn (constantly nil)}
+  (prop/for-all [s gen/string] ;; generate nonsense strings and exercise valid?
+    (boolean? (nnn/valid? s))))
+
+(defspec random-strings-normalise
+  {:num-tests 5000 :reporter-fn (constantly nil)}
+  (prop/for-all [s gen/string-alphanumeric]
+    (let [result (nnn/normalise s)]
+      (or (nil? result) (string? result)))))
+
+(defspec random-strings-format
+  {:num-tests 5000 :reporter-fn (constantly nil)}
+  (prop/for-all [s gen/string-alphanumeric]
+    (let [result (nnn/format-nnn s)]
+      (or (nil? result) (string? result)))))
 
 (comment
   (run-tests))
