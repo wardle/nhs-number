@@ -61,9 +61,10 @@
   6. If result is 10, NHS number is invalid
   7. Check remainder matches the check digit, if it does not NHS number is invalid"
   [^String nnn]
-  (when (and (= 10 (count nnn)) (all-digits? nnn))
-    (let [cd (- (char-code-at nnn 9) 48)]                   ;; the check digit
-      (= cd (check-digit nnn)))))
+  (boolean
+    (when (and (= 10 (count nnn)) (all-digits? nnn))
+      (let [cd (- (char-code-at nnn 9) 48)]                   ;; the check digit
+        (= cd (check-digit nnn))))))
 
 (defn format-nnn
   "Formats an NHS number for display purposes into 3,3,4 format (as per standard
