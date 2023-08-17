@@ -39,9 +39,10 @@
         c1 (- 11 (mod total 11))]                           ;; calculate check digit
     (if (= 11 c1) 0 c1)))                                   ;; corrective fix when result is 11
 
-(defn ^:private all-digits? [s]
-  #?(:clj  (every? #(Character/isDigit ^char %) s)
-     :cljs (not-any? #(js/isNaN %) s)))
+(defn ^:private all-digits?
+  "Are all characters in the string digits?"
+  [s]
+  (boolean (re-find #"^\d+$" s)))
 
 (defn ^:private char-code-at
   "Returns the integer value of the character at index 'idx'"

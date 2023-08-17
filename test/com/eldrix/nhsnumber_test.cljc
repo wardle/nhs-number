@@ -31,6 +31,10 @@
   (doseq [nnn invalid-examples]
     (is (not (nnn/valid? nnn)))))
 
+(deftest all-digits
+  (is (#'nnn/all-digits? "123"))
+  (is (not (#'nnn/all-digits? "a123"))))
+
 (deftest test-normalise
   (is (= (nnn/normalise "123 123 4567") "1231234567"))
   (is (nnn/valid? (nnn/normalise "111 111 1111")))
@@ -72,6 +76,16 @@
   (prop/for-all [s gen/string-alphanumeric]
     (let [result (nnn/format-nnn s)]
       (or (nil? result) (string? result)))))
+
+(defspec all-digits-correct
+  {:num-tests 5000 :reporter-fn (constantly nil)}
+  (prop/for-all [s (gen/fmap str (gen/large-integer* {:min 0}))]
+    (#'nnn/all-digits? s)))
+
+(defspec all-digits-incorrect
+  {:num-tests 5000 :reporter-fn (constantly nil)}
+  (prop/for-all [s (gen/fmap str/join (gen/vector gen/char-alpha))]
+    (not (#'nnn/all-digits? s))))
 
 (comment
   (run-tests))
