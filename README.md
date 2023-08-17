@@ -13,7 +13,16 @@ Service in England and Wales.
 
 
 
+
+
 # Development notes
+
+## Automated GitHub actions
+
+On every commit, an automated test suite is run using Clojure and ClojureScript.
+On every tag, a release will be made automatically to Clojars.
+
+## From the command-line
 
 Run unit tests in Clojure:
 ```shell
