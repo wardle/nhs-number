@@ -25,6 +25,13 @@ Run unit tests in ClojureScript (this compiles the test source files into Javasc
 clj -M:test-cljs
 ```
 
+Run unit tests in ClojureScript in a browser
+```shell
+clj -M:test-cljs-browser
+```
+
+A test server will be run which will return the results of the test suite.
+
 
 Build a library jar file
 ```shell
