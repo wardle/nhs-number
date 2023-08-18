@@ -1,4 +1,4 @@
-name: coverage
+name: Coverage
 
 on:
   pull_request:
@@ -31,11 +31,11 @@ jobs:
       - name: Install dependencies
         run: clojure -P -M:test:coverage
 
-      - name: generate coverage report
+      - name: Generate test coverage report
         run: |
           CLOVERAGE_VERSION=1.2.4 clojure -M:test/coverage --codecov || :
 
-      - name: Upload coverage to Codecov
+      - name: Upload coverage report to Codecov
         uses: codecov/codecov-action@v3
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
