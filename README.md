@@ -1,6 +1,7 @@
 # nhs-number
 
 [![Clojars Project](https://img.shields.io/clojars/v/com.eldrix/nhs-number.svg)](https://clojars.org/com.eldrix/nhs-number)
+[![cljdoc badge](https://cljdoc.org/badge/com.eldrix/nhs-number)](https://cljdoc.org/d/com.eldrix/nhs-number)
 [![clj tests](https://github.com/wardle/nhs-number/actions/workflows/test-clj.yml/badge.svg)](https://github.com/wardle/nhs-number/actions/workflows/test-clj.yml)
 [![cljs tests](https://github.com/wardle/nhs-number/actions/workflows/test-cljs.yml/badge.svg)](https://github.com/wardle/nhs-number/actions/workflows/test-cljs.yml)
 [![codecov](https://codecov.io/gh/wardle/nhs-number/graph/badge.svg?token=K0NWSYYGZ8)](https://codecov.io/gh/wardle/nhs-number)
