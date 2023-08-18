@@ -134,8 +134,8 @@
     (when (> n 9)
       (throw (ex-info (str "Invalid prefix: " prefix) {})))
     (vector
-      (or (parse-long (apply str prefix (repeat (- 9 n) \0))) 0)
-      (or (parse-long (apply str prefix (repeat (- 9 n) \9))) 0))))
+      (or (parse-long (apply str prefix (repeat (- 9 n) \0))) (throw (ex-info (str "Invalid prefix: " prefix) {})))
+      (or (parse-long (apply str prefix (repeat (- 9 n) \9))) (throw (ex-info (str "Invalid prefix: " prefix) {}))))))
 
 (defn ^:private rand-int-range
   "Returns a random integer between start and end (inclusive)."

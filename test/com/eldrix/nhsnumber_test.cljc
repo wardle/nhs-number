@@ -44,7 +44,8 @@
   (is (not (nnn/valid? (nnn/normalise "111 111  1111" :strict)))
       "Only single separator permitted in strict mode")
   (is (not (nnn/valid? (nnn/normalise "111a111a1111" :lenient)))
-      "Only non-word characters can be used as separators"))
+      "Only non-word characters can be used as separators")
+  (is (thrown? #?(:cljs :default :clj Exception) (nnn/normalise "1111111111" nil))))
 
 (deftest test-format
   (is (= (nnn/format-nnn "1231234567") "123 123 4567")))
@@ -58,10 +59,11 @@
     (is (every? true? (map #(str/starts-with? (nnn/format-nnn %) "999 ") xs)))))
 
 (deftest test-random
-  (is (nnn/valid? (nnn/random))))
+  (is (nnn/valid? (nnn/random)))
+  (is (thrown? #?(:cljs :default :clj Exception) (nnn/random "aaa"))))
 
 (deftest test-invalid-prefix
-  (is (thrown? Exception (nnn/random-sequence "1111111111"))))
+  (is (thrown? #?(:cljs :default :clj Exception) (nnn/random-sequence "1111111111"))))
 
 (deftest test-consecutive-seq
   (let [xs (take 10000 (nnn/ordered-sequence))]
