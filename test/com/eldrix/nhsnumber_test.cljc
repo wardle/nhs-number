@@ -50,12 +50,22 @@
   (is (= (nnn/format-nnn "1231234567") "123 123 4567")))
 
 (deftest test-random-seq
+  (let [xs (take 10000 (nnn/random-sequence))]
+    (is (every? nnn/valid? xs)))
   (let [xs (take 10000 (nnn/random-sequence 999))]
     (is (every? nnn/valid? xs))
     (is (every? true? (map #(str/starts-with? % "999") xs)))
     (is (every? true? (map #(str/starts-with? (nnn/format-nnn %) "999 ") xs)))))
 
+(deftest test-random
+  (is (nnn/valid? (nnn/random))))
+
+(deftest test-invalid-prefix
+  (is (thrown? Exception (nnn/random-sequence "1111111111"))))
+
 (deftest test-consecutive-seq
+  (let [xs (take 10000 (nnn/ordered-sequence))]
+    (is (every? nnn/valid? xs)))
   (let [xs (take 10000 (nnn/ordered-sequence 999))]
     (is (every? nnn/valid? xs))
     (is (every? true? (map #(str/starts-with? % "999") xs)))))
