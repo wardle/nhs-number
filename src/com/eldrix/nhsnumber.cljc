@@ -130,12 +130,13 @@
   => [560000000 569999999]
   ```"
   [prefix]
-  (let [n (count (str prefix))]
-    (when (> n 9)
+  (let [n (count (str prefix))
+        start (parse-long (apply str prefix (repeat (- 9 n) \0)))
+        end (parse-long (apply str prefix (repeat (- 9 n) \9)))]
+    (when (or (> n 9) (nil? start) (nil? end))
       (throw (ex-info (str "Invalid prefix: " prefix) {})))
-    (vector
-      (or (parse-long (apply str prefix (repeat (- 9 n) \0))) (throw (ex-info (str "Invalid prefix: " prefix) {})))
-      (or (parse-long (apply str prefix (repeat (- 9 n) \9))) (throw (ex-info (str "Invalid prefix: " prefix) {}))))))
+    (vector start end)))
+
 
 (defn ^:private rand-int-range
   "Returns a random integer between start and end (inclusive)."
