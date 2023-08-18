@@ -28,8 +28,16 @@
   :test-cljs-browser
   {:extra-paths ["test"]
    :extra-deps  {org.clojure/test.check {:mvn/version "1.1.1"}
-                 thheller/shadow-cljs {:mvn/version "2.25.2"}}
+                 thheller/shadow-cljs   {:mvn/version "2.25.2"}}
    :main-opts   ["-m" "shadow.cljs.devtools.cli" "watch" "browser-test"]}
+
+  :test/coverage
+  {:extra-paths ["test"]
+   :extra-deps  {org.clojure/test.check {:mvn/version "1.1.1"}
+                 cloverage/cloverage    {:mvn/version "1.2.4"}}
+   :main-opts ["-m" "cloverage.coverage"
+               "-p" "src"
+               "-s" "test"]}
 
   :outdated
   {:extra-deps {com.github.liquidz/antq {:mvn/version "2.5.1095"}}
