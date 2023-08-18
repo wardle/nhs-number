@@ -34,7 +34,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Install dependencies
-        run:  clojure -P -M:test-cljs
+        run:  clojure -P -M:test:node-cljs
 
       - name: ClojureScript tests
-        run:  clojure -M:test-cljs
+        run:  clojure -M:test:node-cljs

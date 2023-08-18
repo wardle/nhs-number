@@ -7,37 +7,26 @@
                  slipset/deps-deploy           {:mvn/version "0.2.1"}}
    :ns-default  build}
 
-  :dev
+  :test
   {:extra-paths ["test"]
-   :extra-deps  {org.clojure/test.check {:mvn/version "1.1.1"}
-                 criterium/criterium    {:mvn/version "0.4.6"}}}
-
-  :test-clj
-  {:extra-paths ["test"]
-   :extra-deps  {org.clojure/test.check    {:mvn/version "1.1.1"}
-                 com.cognitect/test-runner {:git/url "https://github.com/cognitect-labs/test-runner.git"
+     :extra-deps  {org.clojure/test.check {:mvn/version "1.1.1"}
+                   criterium/criterium    {:mvn/version "0.4.6"}}}
+  :runner
+  {:extra-deps  {com.cognitect/test-runner {:git/url "https://github.com/cognitect-labs/test-runner.git"
                                             :sha     "7284cda41fb9edc0f3bc6b6185cfb7138fc8a023"}}
    :main-opts   ["-m" "cognitect.test-runner"]}
 
-  :test-cljs
-  {:extra-paths ["test"]
-   :extra-deps  {org.clojure/test.check {:mvn/version "1.1.1"}
-                 thheller/shadow-cljs   {:mvn/version "2.25.2"}}
+  :node-cljs
+  {:extra-deps  {thheller/shadow-cljs   {:mvn/version "2.25.2"}}
    :main-opts   ["-m" "shadow.cljs.devtools.cli" "compile" "node-test"]}
 
-  :test-cljs-browser
-  {:extra-paths ["test"]
-   :extra-deps  {org.clojure/test.check {:mvn/version "1.1.1"}
-                 thheller/shadow-cljs   {:mvn/version "2.25.2"}}
+  :browser-cljs
+  {:extra-deps  {thheller/shadow-cljs   {:mvn/version "2.25.2"}}
    :main-opts   ["-m" "shadow.cljs.devtools.cli" "watch" "browser-test"]}
 
-  :test/coverage
-  {:extra-paths ["test"]
-   :extra-deps  {org.clojure/test.check {:mvn/version "1.1.1"}
-                 cloverage/cloverage    {:mvn/version "1.2.4"}}
-   :main-opts ["-m" "cloverage.coverage"
-               "-p" "src"
-               "-s" "test"]}
+  :coverage
+  {:extra-deps  {cloverage/cloverage    {:mvn/version "1.2.4"}}
+   :main-opts ["-m" "cloverage.coverage" "-p" "src" "-s" "test"]}
 
   :outdated
   {:extra-deps {com.github.liquidz/antq {:mvn/version "2.5.1095"}}

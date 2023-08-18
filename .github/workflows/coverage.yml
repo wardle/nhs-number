@@ -33,7 +33,7 @@ jobs:
 
       - name: Generate test coverage report
         run: |
-          CLOVERAGE_VERSION=1.2.4 clojure -M:test/coverage --codecov || :
+          CLOVERAGE_VERSION=1.2.4 clojure -M:test:coverage --codecov || :
 
       - name: Upload coverage report to Codecov
         uses: codecov/codecov-action@v3

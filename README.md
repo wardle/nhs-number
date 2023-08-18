@@ -28,17 +28,17 @@ On every tag, a release will be made automatically to Clojars.
 
 Run unit tests in Clojure:
 ```shell
-clj -M:test-clj
+clj -M:test:runner
 ```
 
 Run unit tests in ClojureScript (this compiles the test source files into Javascript and runs using 'node.js'):
 ```shell
-clj -M:test-cljs
+clj -M:test:node-cljs
 ```
 
 Run unit tests in ClojureScript in a browser
 ```shell
-clj -M:test-cljs-browser
+clj -M:test:browser-cljs
 ```
 
 A test server will be run which will return the results of the test suite.
