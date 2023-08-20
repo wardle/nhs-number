@@ -96,13 +96,14 @@
   ([s]
    (normalise s :lenient))
   ([s mode]
-   (let [s' (case mode
-              ;; in lenient mode, we permit any number of whitespace/punctuation in any position
-              :lenient (str/replace s #"\W*" "")
-              ;; in strict mode, input must match 3,3,4 with 0 or 1 space/punctuation
-              :strict (when-let [m (re-matches #"(\d{3})\W?(\d{3})\W?(\d{4})" s)]
-                        (str (m 1) (m 2) (m 3))))]
-     (when (= 10 (count s')) s'))))
+   (when-not (str/blank? s)
+     (let [s' (case mode
+                ;; in lenient mode, we permit any number of whitespace/punctuation in any position
+                :lenient (str/replace s #"\W*" "")
+                ;; in strict mode, input must match 3,3,4 with 0 or 1 space/punctuation
+                :strict (when-let [m (re-matches #"(\d{3})\W?(\d{3})\W?(\d{4})" s)]
+                          (str (m 1) (m 2) (m 3))))]
+       (when (= 10 (count s')) s')))))
 
 (defn ^:private pad-leading
   "Generate a string representation of a number with padding."

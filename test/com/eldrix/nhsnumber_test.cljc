@@ -14,7 +14,8 @@
    "4823917286"])
 
 (def invalid-examples
-  [""
+  [nil
+   ""
    " "
    "4865447041"
    "a4785"
@@ -35,6 +36,7 @@
   (is (not (#'nnn/all-digits? "a123"))))
 
 (deftest test-normalise
+  (is (nil? (nnn/normalise nil)))
   (is (= (nnn/normalise "123 123 4567") "1231234567"))
   (is (nnn/valid? (nnn/normalise "111 111 1111")))
   (is (nnn/valid? (nnn/normalise "111-111-1111" :strict)))
