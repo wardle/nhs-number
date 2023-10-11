@@ -3,7 +3,7 @@
  :aliases
  {:build
   {:extra-paths ["."]
-   :deps        {io.github.clojure/tools.build {:mvn/version "0.9.5"}
+   :deps        {io.github.clojure/tools.build {:mvn/version "0.9.6"}
                  slipset/deps-deploy           {:mvn/version "0.2.1"}}
    :ns-default  build}
 
@@ -17,11 +17,11 @@
    :main-opts   ["-m" "cognitect.test-runner"]}
 
   :node-cljs
-  {:extra-deps  {thheller/shadow-cljs   {:mvn/version "2.25.2"}}
+  {:extra-deps  {thheller/shadow-cljs   {:mvn/version "2.25.8"}}
    :main-opts   ["-m" "shadow.cljs.devtools.cli" "compile" "node-test"]}
 
   :browser-cljs
-  {:extra-deps  {thheller/shadow-cljs   {:mvn/version "2.25.2"}}
+  {:extra-deps  {thheller/shadow-cljs   {:mvn/version "2.25.8"}}
    :main-opts   ["-m" "shadow.cljs.devtools.cli" "watch" "browser-test"]}
 
   :coverage
@@ -29,13 +29,13 @@
    :main-opts ["-m" "cloverage.coverage" "-p" "src" "-s" "test"]}
 
   :outdated
-  {:extra-deps {com.github.liquidz/antq {:mvn/version "2.5.1109"}}
+  {:extra-deps {com.github.liquidz/antq {:mvn/version "2.7.1133"}}
    :main-opts  ["-m" "antq.core"]}
 
   :upgrade
-  {:extra-deps {com.github.liquidz/antq {:mvn/version "2.5.1109"}}
+  {:extra-deps {com.github.liquidz/antq {:mvn/version "2.7.1133"}}
    :main-opts  ["-m" "antq.core" "--upgrade"]}
 
   :lint/kondo
-  {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2023.07.13"}}
+  {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2023.09.07"}}
    :main-opts  ["-m" "clj-kondo.main" "--lint" "src" "--lint" "test"]}}}

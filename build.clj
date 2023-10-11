@@ -23,11 +23,30 @@
                 :scm       {:url                 "https://github.com/wardle/nhs-number"
                             :tag                 (str "v" version)
                             :connection          "scm:git:git://github.com/wardle/nhs-number.git"
-                            :developerConnection "scm:git:ssh://git@github.com/wardle/nhs-number.git"}})
+                            :developerConnection "scm:git:ssh://git@github.com/wardle/nhs-number.git"}
+                :pom-data  [[:description "A Clojure/Script library providing validation, formatting and generation of UK NHS Numbers"]
+                            [:developers
+                             [:developer
+                              [:id "wardle"] [:name "Mark Wardle"] [:email "mark@wardle.org"] [:url "https://wardle.org"]]]
+                            [:organization [:name "Eldrix Ltd"]]
+                            [:licenses
+                             [:license
+                              [:name "The Apache Software License, Version 2.0"]
+                              [:url "http://www.apache.org/licenses/LICENSE-2.0.txt"]
+                              [:distribution "repo"]]]]})
   (b/copy-dir {:src-dirs   ["src"]
                :target-dir class-dir})
   (b/jar {:class-dir class-dir
           :jar-file  jar-file}))
+
+(defn compile [_]
+  (b/compile-clj {:basis        jar-basis
+                  :src-dirs     ["src"]
+                  :ns-compile   ['com.eldrix.nhsnumber]
+                  :compile-opts {:elide-meta     [:doc :added]
+                                 :direct-linking true}
+                  :java-opts    ["-Dlogback.configurationFile=logback-build.xml"]
+                  :class-dir    class-dir}))
 
 (defn install
   "Installs pom and library jar in local maven repository"
