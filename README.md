@@ -56,5 +56,11 @@ Deploy to Clojars repository: (requires valid `CLOJARS_USERNAME` and
 clj -T:build deploy
 ```
 
+# Other libraries
+
+You can find similar libraries for other programming languages:
+
+* Python : [https://github.com/uk-fci/nhs-number](https://github.com/uk-fci/nhs-number)
+
 
 Mark Wardle
