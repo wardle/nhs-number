@@ -105,6 +105,9 @@
                           (str (m 1) (m 2) (m 3))))]
        (when (= 10 (count s')) s')))))
 
+(defn valid*? [s]
+  (valid? (normalise s)))
+
 (defn ^:private pad-leading
   "Generate a string representation of a number with padding."
   [n i]

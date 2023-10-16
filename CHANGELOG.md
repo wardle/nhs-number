@@ -2,6 +2,13 @@
 
 This log documents significant changes for each release.
 
+## [1.0.54] - 2023-10-16
+
+* Add `valid*?` to normalise and validate in one convenient step
+* Additional metadata including licence included in library jar build artefact
+* Improvements to workflows in GitHub Actions
+* Switch to Eclipse Public License (EPL) v2.0 
+
 ## [1.0.40] - 2023-08-18
 
 * More complete test suite, run automatically using GitHub Actions, including coverage report via codecov.

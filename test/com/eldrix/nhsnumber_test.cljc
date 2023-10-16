@@ -20,16 +20,18 @@
    "4865447041"
    "a4785"
    "1234567890"
-   "111 111 1111"
+   "111 112 1111"
    "          "])
 
 (deftest test-valid
   (doseq [nnn valid-examples]
-    (is (nnn/valid? nnn))))
+    (is (nnn/valid? nnn))
+    (is (nnn/valid*? nnn))))
 
 (deftest test-invalid
   (doseq [nnn invalid-examples]
-    (is (not (nnn/valid? nnn)))))
+    (is (not (nnn/valid? nnn)))
+    (is (not (nnn/valid*? nnn)))))
 
 (deftest all-digits
   (is (#'nnn/all-digits? "123"))
