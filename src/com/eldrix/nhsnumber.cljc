@@ -58,9 +58,9 @@
   7. Check remainder matches the check digit, if it does not NHS number is invalid"
   [^String nnn]
   (boolean
-    (when (and (= 10 (count nnn)) (all-digits? nnn))
-      (let [cd (- (char-code-at nnn 9) 48)]                   ;; the check digit
-        (= cd (check-digit nnn))))))
+   (when (and (= 10 (count nnn)) (all-digits? nnn))
+     (let [cd (- (char-code-at nnn 9) 48)]                   ;; the check digit
+       (= cd (check-digit nnn))))))
 
 (defn format-nnn
   "Formats an NHS number for display purposes into 3,3,4 format (as per standard
@@ -116,9 +116,9 @@
   "A transducer that transforms input strings by padding to 9 digits, adding a
   check digit and removing invalid generated NHS numbers."
   (comp
-    (map #(let [s (pad-leading 9 %)]
-            (str s (check-digit s))))                       ;; this *can* generate invalid NHS numbers (e.g. if check digit is 10)
-    (filter valid?)))
+   (map #(let [s (pad-leading 9 %)]
+           (str s (check-digit s))))                       ;; this *can* generate invalid NHS numbers (e.g. if check digit is 10)
+   (filter valid?)))
 
 (defn ^:private nnn-range
   "Given a 'prefix' generate a range as a vector of start and end. Prefix can
@@ -135,7 +135,6 @@
     (when (or (> n 9) (nil? start) (nil? end))
       (throw (ex-info (str "Invalid prefix: " prefix) {})))
     (vector start end)))
-
 
 (defn ^:private rand-int-range
   "Returns a random integer between start and end (inclusive)."
